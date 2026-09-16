@@ -1,0 +1,1 @@
+export { getHeroPromos } from './getHeroPromos';
