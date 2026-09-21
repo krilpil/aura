@@ -46,6 +46,7 @@ export const Hero = () => {
 
           <SContent>
             <STitle>{promo.title}</STitle>
+
             <SText>{promo.description}</SText>
 
             <SFacts>

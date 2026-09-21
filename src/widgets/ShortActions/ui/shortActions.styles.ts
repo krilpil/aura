@@ -56,7 +56,14 @@ export const SActionsGrid = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
     grid-template-columns: 1fr;
     grid-template-areas: none;
+    grid-auto-flow: row;
+    grid-auto-rows: auto;
     gap: 12px;
+
+    > * {
+      grid-column: 1 / -1;
+      grid-area: auto;
+    }
   }
 `;
 
@@ -267,7 +274,14 @@ export const SActionCard = styled.article<{ $featured?: boolean }>`
   @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
     grid-column: auto;
     grid-area: auto;
+    grid-row: auto;
     min-height: ${({ $featured }) => ($featured ? '430px' : '360px')};
+
+    &:nth-child(n) {
+      grid-area: auto;
+      grid-column: 1 / -1;
+      grid-row: auto;
+    }
 
     &::after {
       background: ${({ $featured }) =>

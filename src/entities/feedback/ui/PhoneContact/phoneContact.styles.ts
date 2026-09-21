@@ -77,9 +77,8 @@ export const STel = styled.a`
   }
 `;
 
-export const SOpeningHours = styled.span`
+export const SAddress = styled.div`
   ${({ theme }) => theme.font.body.small};
-  color: ${({ theme }) => theme.color.surface.onSurfaceVariant};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
     display: none;
