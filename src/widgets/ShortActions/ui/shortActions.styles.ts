@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import styled from 'styled-components';
 
 export const SSectionHeader = styled.div`
@@ -12,22 +13,19 @@ export const SSectionHeader = styled.div`
 `;
 
 export const STitle = styled.h2`
+  ${({ theme }) => theme.typography.section};
   max-width: 760px;
   margin: 0;
-  ${({ theme }) => theme.font.headline.extraLarge};
-  font-size: clamp(34px, 4.6vw, 68px);
-  line-height: 1.04;
-  letter-spacing: 0;
+
   color: #1d2b22;
   text-wrap: balance;
 `;
 
 export const SDescription = styled.p`
+  ${({ theme }) => theme.typography.body};
   max-width: 520px;
   margin: 0;
-  ${({ theme }) => theme.font.body.large};
-  font-size: clamp(15px, 1.35vw, 18px);
-  line-height: 1.58;
+
   color: ${({ theme }) => theme.color.text.secondary};
   text-wrap: pretty;
 `;
@@ -84,6 +82,18 @@ export const SActionImage = styled.div`
   }
 `;
 
+export const SActionLink = styled(Link)`
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: inherit;
+
+  &:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: -6px;
+  }
+`;
+
 export const SMeta = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -96,11 +106,12 @@ export const SMeta = styled.div`
 `;
 
 export const SMetaItem = styled.span`
+  ${({ theme }) => theme.typography.meta};
   padding: 7px 11px;
   border: 1px solid rgba(255, 255, 255, 0.42);
   border-radius: ${({ theme }) => theme.borderRadius.full};
   background: rgba(255, 255, 255, 0.1);
-  ${({ theme }) => theme.font.label.small};
+
   color: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(12px);
   transition:
@@ -129,28 +140,21 @@ export const SActionContent = styled.div`
 `;
 
 export const SActionTitle = styled.h3`
+  ${({ theme }) => theme.typography.card};
   margin: 0 0 10px;
-  ${({ theme }) => theme.font.headline.large};
-  font-size: clamp(24px, 2.4vw, 36px);
-  line-height: 1.08;
-  letter-spacing: 0;
+
   text-wrap: balance;
   text-shadow: 0 14px 36px rgba(0, 0, 0, 0.32);
   transition:
     color var(--action-hover-duration) var(--action-hover-easing),
     text-shadow var(--action-hover-duration) var(--action-hover-easing);
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
-    font-size: 27px;
-  }
 `;
 
 export const SActionText = styled.p`
+  ${({ theme }) => theme.typography.body};
   max-width: 430px;
   margin: 0;
-  ${({ theme }) => theme.font.body.medium};
-  font-size: 15px;
-  line-height: 1.52;
+
   color: rgba(255, 255, 255, 0.82);
   text-wrap: pretty;
   transition: color var(--action-hover-duration) var(--action-hover-easing);
@@ -309,8 +313,7 @@ export const SShortActions = styled.section`
   --action-hover-easing: cubic-bezier(0.22, 1, 0.36, 1);
 
   padding: clamp(72px, 8vw, 124px) clamp(16px, 5vw, 72px);
-  background:
-    linear-gradient(180deg, #f7f6f1 0%, #eef0e8 100%), ${({ theme }) => theme.color.surface.default};
+  background: transparent;
   color: ${({ theme }) => theme.color.text.primary};
 
   @media (prefers-reduced-motion: reduce) {
@@ -334,13 +337,9 @@ export const SShortActions = styled.section`
     }
 
     ${STitle} {
-      font-size: 34px;
-      line-height: 1.08;
     }
 
     ${SDescription} {
-      font-size: 15px;
-      line-height: 1.48;
     }
   }
 `;

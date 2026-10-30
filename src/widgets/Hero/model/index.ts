@@ -1,1 +1,1 @@
-export type { IHeroPromo, IHeroPromoAction } from './types';
+export type { IHeroPromo } from './types';

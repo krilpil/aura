@@ -2,8 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
   :root {
-    line-height: 1.3;
-    font-weight: 400;
+    ${({ theme }) => theme.typography.body};
   }
 
   * {
@@ -12,5 +11,32 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     margin: 0;
+  }
+
+  h1 {
+    ${({ theme }) => theme.typography.hero};
+  }
+
+  h2 {
+    ${({ theme }) => theme.typography.section};
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    ${({ theme }) => theme.typography.card};
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  strong,
+  b {
+    font-weight: 600;
   }
 `;

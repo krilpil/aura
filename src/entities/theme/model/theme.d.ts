@@ -1,22 +1,5 @@
 import 'styled-components';
-
-interface IFontCategory {
-  extraLarge?: string;
-  large: string;
-  medium: string;
-  small: string;
-}
-
-export interface IFontTheme {
-  headline: IFontCategory;
-  title: IFontCategory;
-  body: IFontCategory;
-  label: IFontCategory;
-  navTab: {
-    default: string;
-    active: string;
-  };
-}
+import type { TypographyTheme } from '../lib/typography';
 
 export interface IBorderRadiusTheme {
   extraLarge: string;
@@ -177,7 +160,7 @@ declare module 'styled-components' {
   export interface DefaultTheme {
     color: IColorsTheme;
     borderRadius: IBorderRadiusTheme;
-    font: IFontTheme;
+    typography: TypographyTheme;
     breakpoints: IBreakpointsTheme;
   }
 }

@@ -19,6 +19,8 @@
 
 # production
 /build
+/aura-image.tar
+/.aura-image.tar.*
 
 # misc
 .DS_Store

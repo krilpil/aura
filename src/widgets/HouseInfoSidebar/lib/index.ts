@@ -1,0 +1,1 @@
+export { getPhoneHref } from './getPhoneHref';

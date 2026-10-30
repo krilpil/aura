@@ -4,59 +4,47 @@ const heroPromos: IHeroPromo[] = [
   {
     id: 'summer-events',
     image: {
-      src: '/media/promo/summer.png',
+      src: '/media/promo/summer.jpg',
       alt: 'Летняя площадка Aura среди леса у воды',
     },
-    title: 'Уникальная площадка в Арзамасе',
+    title: 'Место для отдыха и событий',
     description: [
-      'Площадка для свадеб, юбилеев, корпоративов',
-      'и семейных праздников с ресторанным сервисом среди природы.',
+      'Ресторан с двумя банкетными залами, домик для отдыха без ночлега, лазертаг, сапы и байдарки,',
+      'спортивные и детские площадки — среди леса и воды в Арзамасе.',
     ].join(' '),
-    facts: ['Ресторан', 'Гостевой дом', 'Лазертаг'],
-    actions: [
-      { label: 'Забронировать дату', variant: 'primary' },
-      { label: 'Посмотреть площадку', variant: 'secondary' },
-    ],
+    facts: ['Ресторан', 'Домик «Исток»', 'Лазертаг'],
   },
   {
     id: 'restaurant-halls',
     image: {
-      src: '/media/promo/restaurant_inside.png',
+      src: '/media/restaurant/big-water.webp',
       alt: 'Интерьер банкетного зала Aura',
     },
-    title: 'Два зала для праздников',
+    title: 'Два зала\nдля праздников',
     description: [
       '«Лесная симфония» до 60 гостей и «Большая вода» до 120 гостей:',
       'камерные ужины, пышные свадьбы, выпускные и корпоративные банкеты.',
     ].join(' '),
     facts: ['60 гостей', '120 гостей'],
-    actions: [
-      { label: 'Выбрать зал', variant: 'primary' },
-      { label: 'Узнать меню', variant: 'secondary' },
-    ],
   },
   {
     id: 'season-booking',
     image: {
-      src: '/media/promo/winter.png',
-      alt: 'Зимний вид лесной площадки Aura',
+      src: '/media/promo/winter-corporate.jpg',
+      alt: 'Праздничная сервировка с хвоей и тёплыми огнями для зимнего корпоратива',
     },
-    title: 'Открываем бронь на зимний сезон',
+    title: 'Открываем бронь на зимние корпоративы',
     description: [
       'Пятницы и субботы разбирают первыми.',
       'При бронировании до конца месяца — съедобная картина',
       'с авторскими намазками для фуршета в подарок.',
     ].join(' '),
     facts: ['Подарок к брони', 'Зимние даты'],
-    actions: [
-      { label: 'Узнать свободные даты', variant: 'primary' },
-      { label: 'Получить подарок', variant: 'secondary' },
-    ],
   },
   {
     id: 'lasertag',
     image: {
-      src: '/media/promo/lasertag.png',
+      src: '/media/promo/lasertag.jpg',
       alt: 'Лазертаг на закрытой лесной территории Aura',
     },
     title: 'Лазертаг для активного праздника',
@@ -65,10 +53,6 @@ const heroPromos: IHeroPromo[] = [
       'командная игра на закрытой территории среди леса.',
     ].join(' '),
     facts: ['Для компаний', 'Закрытая территория'],
-    actions: [
-      { label: 'Добавить к мероприятию', variant: 'primary' },
-      { label: 'Собрать программу', variant: 'secondary' },
-    ],
   },
 ];
 

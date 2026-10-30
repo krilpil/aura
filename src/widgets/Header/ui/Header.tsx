@@ -1,6 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 import { MenuDrawer } from '@/features/MenuDrawer';
 
@@ -11,40 +13,109 @@ import {
   SMenuDrawer,
   SNavigation,
   SNavigationLink,
+  SEventsDropdown,
+  SEventsLinks,
   STools,
 } from './header.styles';
 
 const SCROLL_THRESHOLD = 12;
 
+const eventLinks = [
+  { label: 'Корпоративные клиенты', href: '/events/corporate' },
+  { label: 'Частные события', href: '/events/private' },
+  { label: 'Свадьбы', href: '/events/weddings' },
+  { label: 'Выпускные', href: '/events/graduation' },
+  { label: 'Спортивный комплекс', href: '/events/sports' },
+];
+
 const navigation = [
   {
-    label: 'Проживание',
-    href: '#accommodation',
+    label: 'Дом',
+    href: '/house/istok',
   },
   {
-    label: 'Услуги',
-    href: '#services',
+    label: 'Активный отдых',
+    href: '/activities',
   },
   {
     label: 'Ресторан',
-    href: '#restaurant',
+    href: '/restaurant',
   },
   {
     label: 'Мероприятия',
     href: '#events',
   },
   {
-    label: 'Акции',
-    href: '#offers',
-  },
-  {
-    label: 'О компании',
-    href: '#about',
+    label: 'О нас',
+    href: '/about',
   },
 ];
 
+const EventsDropdown = () => {
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const linksId = useId();
+
+  useEffect(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      const dropdown = dropdownRef.current;
+
+      if (dropdown && event.target instanceof Node && !dropdown.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown, true);
+
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown, true);
+    };
+  }, []);
+
+  return (
+    <SEventsDropdown
+      ref={dropdownRef}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape') {
+          setIsOpen(false);
+          event.currentTarget.querySelector('button')?.focus();
+        }
+      }}
+    >
+      <button
+        type="button"
+        aria-expanded={isOpen}
+        aria-controls={linksId}
+        onClick={() => setIsOpen((open) => !open)}
+      >
+        Мероприятия
+      </button>
+      <SEventsLinks id={linksId} hidden={!isOpen}>
+        {eventLinks.map((link) => (
+          <Link key={link.href} href={link.href}>
+            {link.label}
+          </Link>
+        ))}
+      </SEventsLinks>
+    </SEventsDropdown>
+  );
+};
+
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  const hasSolidBackground = isScrolled || ['/about', '/about/'].includes(pathname);
+
+  const renderNavigation = () =>
+    navigation.map((item) =>
+      item.href === '#events' ? (
+        <EventsDropdown key={item.href} />
+      ) : (
+        <SNavigationLink key={item.href} href={item.href}>
+          {item.label}
+        </SNavigationLink>
+      )
+    );
 
   useEffect(() => {
     const updateHeader = () => {
@@ -63,22 +134,16 @@ export const Header = () => {
   }, []);
 
   return (
-    <SHeader $isScrolled={isScrolled}>
-      <SLogo $isScrolled={isScrolled} href="/" aria-label="Аура — главная" />
+    <SHeader $isScrolled={hasSolidBackground}>
+      <SLogo $isScrolled={hasSolidBackground} href="/" aria-label="Аура — главная" />
 
-      <SNavigation aria-label="Основная навигация">
-        {navigation.map((item) => (
-          <SNavigationLink key={item.href} href={item.href}>
-            {item.label}
-          </SNavigationLink>
-        ))}
-      </SNavigation>
+      <SNavigation aria-label="Основная навигация">{renderNavigation()}</SNavigation>
 
       <STools>
         <SHeaderPhone />
 
         <SMenuDrawer>
-          <MenuDrawer />
+          <MenuDrawer>{renderNavigation()}</MenuDrawer>
         </SMenuDrawer>
       </STools>
     </SHeader>

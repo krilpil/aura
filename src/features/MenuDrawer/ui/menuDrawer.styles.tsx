@@ -51,3 +51,24 @@ export const SMenuButton = styled(Button).attrs({
 export const SMenuDrawer = styled(Drawer).attrs({
   size: '100%',
 })``;
+
+export const SDrawerNavigation = styled.nav`
+  ${({ theme }) => theme.typography.navigationMobile};
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  color: #856d55;
+
+  > a,
+  button[aria-controls] {
+    ${({ theme }) => theme.typography.navigationMobile};
+    padding: 12px 0;
+  }
+
+  a:focus-visible,
+  button[aria-controls]:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+`;

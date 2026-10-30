@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInstagramSquare, faVk } from '@fortawesome/free-brands-svg-icons';
+import { faVk } from '@fortawesome/free-brands-svg-icons';
 
 import {
   SAddress,
@@ -12,7 +12,6 @@ import {
   SFooterBottom,
   SFooterContent,
   SFooterLogo,
-  SLegalLink,
   SNavigationColumn,
   SNavigationLink,
   SNavigationList,
@@ -24,40 +23,36 @@ import {
 
 const navigation = [
   {
-    title: 'Проживание',
-    links: [
-      { label: 'Гостевые дома', href: '/accommodation' },
-      { label: 'Для семей с детьми', href: '/family' },
-    ],
+    title: 'Дом',
+    links: [{ label: 'Домик «Исток»', href: '/house/istok' }],
   },
   {
     title: 'Активный отдых',
     links: [
-      { label: 'Сапы', href: '/activities/sup' },
-      { label: 'Детская площадка', href: '/activities/playground' },
-      { label: 'Волейбольная площадка', href: '/activities/volleyball' },
-      { label: 'Байдарки', href: '/activities/kayaks' },
-      { label: 'Бадминтон', href: '/activities/badminton' },
-      { label: 'Пляжный мини-футбол', href: '/activities/football' },
+      { label: 'Лазертаг', href: '/activities#lasertag' },
+      { label: 'Сапы', href: '/activities#water' },
+      { label: 'Байдарки', href: '/activities#water' },
+      { label: 'Волейбольная площадка', href: '/activities#volleyball' },
+      { label: 'Ориентирование', href: '/activities#orientation' },
+      { label: 'Пляжный мини-футбол', href: '/activities#football' },
+      { label: 'Бадминтон', href: '/activities#badminton' },
+      { label: 'Детская площадка', href: '/activities#playground' },
     ],
   },
   {
     title: 'Мероприятия',
     links: [
+      { label: 'Ресторан', href: '/restaurant' },
       { label: 'Корпоративные клиенты', href: '/events/corporate' },
       { label: 'Частные события', href: '/events/private' },
       { label: 'Свадьбы', href: '/events/weddings' },
       { label: 'Выпускные', href: '/events/graduation' },
+      { label: 'Спортивный комплекс', href: '/events/sports' },
     ],
   },
   {
     title: 'О комплексе',
-    links: [
-      { label: 'О нас', href: '/about' },
-      { label: 'Территория', href: '/territory' },
-      { label: 'Галерея', href: '/gallery' },
-      { label: 'Контакты', href: '/contacts' },
-    ],
+    links: [{ label: 'О нас', href: '/about' }],
   },
 ];
 
@@ -76,21 +71,12 @@ export const Footer = () => {
 
           <SSocials aria-label="Социальные сети">
             <SSocialLink
-              href="https://vk.com/"
+              href="https://vk.ru/aura.place"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="AURA во ВКонтакте"
             >
               <FontAwesomeIcon icon={faVk} />
-            </SSocialLink>
-
-            <SSocialLink
-              href="https://instagram.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="AURA в Instagram"
-            >
-              <FontAwesomeIcon icon={faInstagramSquare} />
             </SSocialLink>
           </SSocials>
         </SBrandColumn>
@@ -110,15 +96,19 @@ export const Footer = () => {
         ))}
 
         <SContactColumn>
-          <SPhone href="tel:+79524481951">+7 (952) 448-19-51</SPhone>
+          <SPhone href="tel:+79993950375">8 (999) 395-03-75</SPhone>
 
           <SAddress>
             Нижегородская область,
             <br />
-            г. Арзамас, ул. Победы, 19
+            г. Арзамас, ул. Победы, 19А
           </SAddress>
 
-          <SRouteLink href="https://yandex.ru/maps/" target="_blank" rel="noopener noreferrer">
+          <SRouteLink
+            href="https://yandex.ru/maps/?rtext=~55.423157%2C43.816434&rtt=auto"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Построить маршрут
           </SRouteLink>
         </SContactColumn>
@@ -126,10 +116,6 @@ export const Footer = () => {
 
       <SFooterBottom>
         <SCopyright>© 2026 Гостиничный комплекс AURA. Все права защищены.</SCopyright>
-
-        <SLegalLink href="/privacy">Политика конфиденциальности</SLegalLink>
-
-        <SLegalLink href="/terms">Пользовательское соглашение</SLegalLink>
       </SFooterBottom>
     </SFooter>
   );

@@ -4,8 +4,6 @@ import Image from 'next/image';
 
 import { getHeroPromos } from '../lib';
 import {
-  SAction,
-  SActions,
   SCarousel,
   SContent,
   SFact,
@@ -54,14 +52,6 @@ export const Hero = () => {
                 <SFact key={fact}>{fact}</SFact>
               ))}
             </SFacts>
-
-            <SActions>
-              {promo.actions.map((action) => (
-                <SAction key={action.label} $variant={action.variant} type="button">
-                  {action.label}
-                </SAction>
-              ))}
-            </SActions>
           </SContent>
         </SSlide>
       ))}

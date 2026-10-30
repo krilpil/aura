@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 
-import { SMenuButton, SMenuDrawer } from './menuDrawer.styles';
+import { SMenuButton, SMenuDrawer, SDrawerNavigation } from './menuDrawer.styles';
 
-export const MenuDrawer = () => {
+export const MenuDrawer = ({ children }: { children: ReactNode }) => {
   const [showMenu, setShowMenu] = useState(false);
 
   const handleOpenMenu = () => setShowMenu(true);
@@ -13,9 +13,16 @@ export const MenuDrawer = () => {
   return (
     <>
       <SMenuDrawer open={showMenu} onClose={handleCloseMenu}>
-        <p>1</p>
-        <p>2</p>
-        <p>3</p>
+        <SDrawerNavigation
+          aria-label="Основная навигация"
+          onClick={(event) => {
+            if (event.target instanceof Element && event.target.closest('a')) {
+              handleCloseMenu();
+            }
+          }}
+        >
+          {children}
+        </SDrawerNavigation>
       </SMenuDrawer>
 
       <SMenuButton

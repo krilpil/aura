@@ -1,36 +1,270 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aura
 
-## Getting Started
+Сайт на Next.js. Требуется Node.js 20.9 или новее.
 
-First, run the development server:
+## Разработка
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Статическая версия
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build:static
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Готовые файлы находятся в `out/`. Разместите содержимое этой папки на статическом хостинге. Для вложенных адресов хостинг должен отдавать `index.html` из соответствующей папки, например `out/house/istok/index.html` для `/house/istok/`.
 
-## Learn More
+## Серверная версия
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build:server
+npm run start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`npm run build` также собирает серверную версию. В этом режиме Next.js сохраняет оптимизацию изображений на сервере.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Docker
 
-## Deploy on Vercel
+### Сборка и развёртывание скриптами
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+В корне проекта находятся исполняемые Bash-скрипты. Для сборки требуется
+работающий Docker с Buildx, для развёртывания — SSH-доступ к серверу:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+./docker-build.sh
+./docker-deploy.sh user@server
+```
+
+По умолчанию сборка создаёт локальный образ `aura:latest` для `linux/amd64`.
+После успешной сборки скрипт также сохраняет образ в `aura-image.tar` в корне
+проекта. Имя архива одинаковое при любом `--image`; предыдущий архив заменяется
+только после успешного экспорта. При ошибке сборки или экспорта предыдущий
+архив сохраняется, временный файл экспорта удаляется.
+Архив можно перенести на сервер и загрузить командой:
+
+```bash
+docker load -i aura-image.tar
+```
+
+Скрипт развёртывания передаёт готовый образ через SSH без промежуточного архива,
+затем запускает или пересоздаёт контейнер `aura`. При обновлении будет короткий
+перерыв в работе; автоматический откат не предусмотрен. В конце выводятся
+статус контейнера и последние строки логов; доступность сайта проверяется отдельно.
+
+На сервере должны быть установлены Bash и Docker. SSH-пользователю нужен доступ
+к Docker без интерактивного `sudo`. Заранее создайте серверный файл окружения
+`/opt/aura/aura.env`, описанный ниже, и настройте reverse proxy и HTTPS.
+SSH-ключи, алиасы серверов и нестандартный порт задаются в `~/.ssh/config`.
+
+Пример с другой платформой, тегом и портом:
+
+```bash
+./docker-build.sh --platform linux/arm64 --image aura:release
+./docker-deploy.sh user@server --image aura:release \
+  --container aura --env-file /opt/aura/aura.env --port 3001
+```
+
+Порт публикуется только на `127.0.0.1` сервера и направляется на порт 3000
+контейнера; при изменении порта обновите адрес upstream в reverse proxy.
+Скрипты не читают локальные `.env`-файлы. Параметры сборки можно передать
+через окружение:
+
+```bash
+SITE_URL=https://auraplace.ru ./docker-build.sh
+```
+
+Аналогично поддерживаются необязательные `GOOGLE_SITE_VERIFICATION` и
+`YANDEX_SITE_VERIFICATION`. SMTP-реквизиты берутся из серверного файла при запуске.
+Справка по параметрам: `./docker-build.sh --help` и `./docker-deploy.sh --help`.
+Скрипт сборки определяет корень проекта по своему расположению и работает
+при запуске из другой директории.
+
+### Команды Docker вручную
+
+Сборка production-образа (Node.js устанавливается внутри образа):
+
+```bash
+docker build -t aura:latest .
+```
+
+Для сборки на Mac с Apple Silicon под Linux-сервер с процессором AMD64:
+
+```bash
+docker buildx build --platform linux/amd64 --load -t aura:latest .
+```
+
+Выбирайте платформу сервера: для ARM64 используйте `linux/arm64`.
+Образ запускает standalone-сервер Next.js от непривилегированного пользователя
+на `0.0.0.0:3000`; поддерживаются API заявок и оптимизация изображений.
+
+SEO-параметры задаются при сборке. По умолчанию `SITE_URL` равен
+`https://auraplace.ru`, коды подтверждения пустые. При необходимости:
+
+```bash
+docker build -t aura:latest \
+  --build-arg SITE_URL=https://auraplace.ru \
+  --build-arg GOOGLE_SITE_VERIFICATION=your-google-code \
+  --build-arg YANDEX_SITE_VERIFICATION=your-yandex-code .
+```
+
+Локальные `.env*` исключены из контекста сборки. На сервере создайте отдельный
+файл `/opt/aura/aura.env` с настройками (без кавычек вокруг значений):
+
+```dotenv
+SITE_URL=https://auraplace.ru
+SMTP_USER=your-account@yandex.ru
+SMTP_PASSWORD=your-app-password
+EVENT_REQUEST_TO=your-account@yandex.ru
+```
+
+Ограничьте доступ к файлу командой `chmod 600 /opt/aura/aura.env`.
+SMTP-реквизиты передаются только при запуске контейнера. `SITE_URL` в окружении
+контейнера должен совпадать с адресом при сборке: он также проверяет источник
+заявок. Для изменения SEO-параметров пересоберите образ.
+
+Чтобы перенести образ без реестра контейнеров:
+
+```bash
+docker save -o aura-image.tar aura:latest
+scp aura-image.tar user@server:/tmp/aura-image.tar
+```
+
+На сервере загрузите образ и запустите контейнер:
+
+```bash
+docker load -i /tmp/aura-image.tar
+docker run -d --name aura --restart unless-stopped \
+  --env-file /opt/aura/aura.env \
+  -p 127.0.0.1:3000:3000 aura:latest
+docker logs --tail 100 aura
+```
+
+Настройте reverse proxy на сервере (например, Nginx) для передачи запросов
+на `http://127.0.0.1:3000` с сохранением `Host` и заголовками
+`X-Forwarded-Proto` и `X-Forwarded-For`. Домен и HTTPS настраиваются на reverse proxy.
+Публикация порта на `127.0.0.1` предполагает, что reverse proxy работает на том же
+сервере вне Docker. Для локального просмотра откройте `http://localhost:3000`;
+для отправки заявок локально задайте этот адрес в `SITE_URL`.
+Серверу требуется исходящий доступ к `smtp.yandex.ru:465`.
+
+При обновлении загрузите новый образ, затем пересоздайте контейнер:
+
+```bash
+docker stop aura
+docker rm aura
+docker run -d --name aura --restart unless-stopped \
+  --env-file /opt/aura/aura.env \
+  -p 127.0.0.1:3000:3000 aura:latest
+```
+
+После запуска проверьте страницы, фотографии, `/robots.txt`, `/sitemap.xml`
+и отправку тестовой заявки. Содержимое заявок в контейнере не сохраняется.
+
+## Заявки через Яндекс Почту
+
+Формы заявок на страницах событий, ресторана, активностей и домиков отправляют письма
+через общий `POST /api/event-request`. Тема и содержание письма зависят от услуги;
+получатель для всех форм задаётся в `EVENT_REQUEST_TO`. Для неё требуется серверная версия Next.js на Node.js
+и исходящие соединения с `smtp.yandex.ru:465` (TLS). Публикация только статических
+файлов не поддерживает отправку; для сайта с формой используйте `npm run build:server`
+и `npm run start`, а не `npm run build:static`.
+
+В настройках Яндекс Почты разрешите доступ для почтовых клиентов с паролями приложений.
+Создайте отдельный пароль приложения для почты в Яндекс ID. Используйте его вместо
+основного пароля аккаунта. [Инструкция Яндекса](https://www.yandex.ru/support/yandex-360/business/mail/ru/mail-clients/others).
+
+Задайте переменные в окружении сервера или в локальном `.env.local` в корне проекта:
+
+```dotenv
+SMTP_USER=your-account@yandex.ru
+SMTP_PASSWORD=your-app-password
+EVENT_REQUEST_TO=your-account@yandex.ru
+SITE_URL=https://auraplace.ru
+```
+
+`SMTP_USER` — полный адрес ящика отправителя; `EVENT_REQUEST_TO` — один адрес получателя,
+который может совпадать с отправителем. Письмо отправляется от имени SMTP-ящика.
+Не добавляйте к этим переменным префикс `NEXT_PUBLIC_` и не коммитьте реальные реквизиты.
+После изменения настроек перезапустите сервер. Для локальной разработки задайте
+`SITE_URL=http://localhost:3000` (или фактический адрес локального сервера): обработчик
+принимает заявки только с этого источника. Если `SITE_URL` не задан, используется
+источник URL запроса; на production указывайте публичный адрес явно.
+
+Телефон и число гостей/участников обязательны. Остальные обязательные поля отмечены
+звёздочкой и зависят от услуги. Дату можно не указывать; для проживания заезд и выезд
+заполняются вместе, выезд позже заезда, вместимость — до 6 гостей. Пожелания — до 1500
+символов. При ошибке SMTP данные остаются в форме для повтора. Закрытие модального
+окна сохраняет незавершённую заявку до ухода со страницы. Заявка требует подтверждения менеджером.
+Успех означает принятие письма SMTP-сервером, а не подтверждение доставки во входящие.
+Заявки в базе не сохраняются. Скрытое поле отсеивает простых ботов, но не заменяет
+защиту от массовых запросов на уровне хостинга.
+
+После настройки отправьте тестовую заявку, проверьте письмо (включая папку «Спам»)
+и соответствие всех полей. При сбое сервер пишет в лог об ошибке настройки или SMTP
+без номера телефона, пароля и содержимого письма.
+
+### Переиспользование формы
+
+`EventRequestSection` и `EventRequestModalTrigger` экспортируются из
+`@/features/EventRequest`. Обязательный `requestType` выбирает конфигурацию:
+`corporate`, `weddings`, `graduation`, `private`, `restaurant`, `activities`,
+`houseStay` или `houseDay`. Секция принимает `id`, `title`, `description`;
+оба компонента принимают `initialValues`, модальный триггер — текст в `children`.
+Триггер поддерживает `variant`: `secondary` (по умолчанию, тонкая рамка),
+`primary` (заливка для основного действия) и `text` (действие в строке тарифа).
+Номер телефона всегда берётся из `contacts.booking`.
+
+Поля, варианты выбора, подписи для письма и проверка находятся в
+`src/shared/config/eventRequest.ts`. API принимает JSON
+`{ requestType, values, website: '' }`, где значения полей — строки.
+Успешный ответ — `{ ok: true }`; ошибки — HTTP 400/403/503 с `message`.
+Название услуги и путь страницы определяет сервер по `requestType`.
+
+## SEO и публикация
+
+Основной адрес сайта — `https://auraplace.ru`. Общие SEO-настройки и метаданные
+страниц находятся в `src/shared/seo/config.ts`. При добавлении страницы добавьте её
+в `seoPages`, вызовите `createPageMetadata` и выведите `StructuredData` с её путём:
+это также добавит адрес в sitemap. Контакты площадки хранятся в
+`src/shared/config/contacts.ts`; часы ресторана в JSON-LD должны соответствовать
+видимому расписанию.
+
+Переменные окружения задаются **до сборки** (например, в `.env.local`):
+
+```dotenv
+SITE_URL=https://auraplace.ru
+GOOGLE_SITE_VERIFICATION=
+YANDEX_SITE_VERIFICATION=
+```
+
+`SITE_URL` необязателен: по умолчанию используется основной домен. Коды подтверждения
+выдаются Google Search Console и Яндекс Вебмастером; пустые значения можно не задавать.
+Не используйте адрес preview-хостинга в production-сборке. Для закрытого стенда
+настройте авторизацию на хостинге, чтобы его копия не попадала в поиск.
+
+Сборка создаёт `/robots.txt` и `/sitemap.xml`. В серверной версии canonical и sitemap
+используют адреса без завершающего слеша, в статической — со слешем. Выберите один
+режим для production и настройте хостинг соответственно:
+
+- Включите HTTPS и постоянное перенаправление HTTP и `www.auraplace.ru` на
+  `https://auraplace.ru` с сохранением пути и параметров.
+- При статической публикации перенаправляйте вложенные адреса без слеша на адреса
+  со слешем; при серверной публикации используйте нормализацию Next.js.
+- Для отсутствующих адресов возвращайте HTTP 404, в статической версии отдавайте
+  `out/404.html` со статусом 404. Не перенаправляйте их на главную.
+- Убедитесь, что страницы, фотографии, `/robots.txt` и `/sitemap.xml` доступны
+  поисковым роботам без авторизации.
+
+После публикации:
+
+1. Подтвердите владение доменом в Яндекс Вебмастере и Google Search Console.
+2. Отправьте `https://auraplace.ru/sitemap.xml` в оба сервиса.
+3. Проверьте главную, ресторан и контакты в Google Rich Results Test и Schema.org
+   Validator; проверьте доступность страниц через инспекцию URL в кабинетах.
+4. Проверьте карточки организации в Яндекс Бизнесе и Google Business Profile:
+   название, телефон и адрес должны совпадать с сайтом.
+5. Следите за индексацией и поисковыми запросами. Метаописания и микроразметка
+   помогают поисковикам понять сайт, но вид сниппета и позиции определяются поиском.

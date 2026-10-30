@@ -4,6 +4,7 @@ import {
   SActionCard,
   SActionContent,
   SActionImage,
+  SActionLink,
   SActionsGrid,
   SActionText,
   SActionTitle,
@@ -18,46 +19,38 @@ import {
 const actions = [
   {
     title: 'Большая вода',
+    href: '/restaurant#big-water',
     text: 'Панорамный зал до 120 гостей для свадеб, выпускных и масштабных семейных торжеств.',
     meta: ['120 гостей'],
-    image: '/media/actions/restaurantB.png',
+    image: '/media/restaurant/big-water.webp',
     alt: 'Банкетный зал Большая вода в Aura',
     featured: true,
   },
   {
     title: 'Лесная симфония',
+    href: '/restaurant#forest-symphony',
     text: 'Камерный зал до 60 гостей для ужинов, юбилеев и церемоний .',
     meta: ['60 гостей'],
-    image: '/media/actions/restaurantA.png',
+    image: '/media/restaurant/forest-symphony.webp',
     alt: 'Зал Лесная симфония в Aura',
   },
   {
-    title: 'Волейбольная площадка',
-    text: 'Активная зона для летних встреч, неформальной части корпоратива или семейного выходного.',
-    meta: ['Летний сезон'],
-    image: '/media/actions/volleyball.png',
-    alt: 'Волейбольная площадка в Aura',
+    title: 'Корпоративы',
+    text:
+      'Командные события с ресторанным сервисом: авторское меню, проектор и звук, ' +
+      'лес и река за панорамными окнами.',
+    meta: ['Проектор и звук'],
+    image: '/media/actions/corporate.jpg',
+    alt: 'Гости на корпоративном приёме в зале Aura у реки',
+    href: '/events/corporate',
   },
   {
-    title: 'Гостевой дом',
-    text: 'Приватное пространство с двумя спальнями для спокойного отдыха до и после праздника.',
-    meta: ['2 спальни', 'до 6 человек'],
-    image: '/media/actions/guest_house.png',
-    alt: 'Гостевой дом на территории Aura',
-  },
-  {
-    title: 'Лазертаг',
-    text: 'Динамичный сценарий для корпоративов, выпускных и дней рождения на свежем воздухе.',
-    meta: ['Командный формат'],
-    image: '/media/actions/lasertag.png',
-    alt: 'Лазертаг на лесной территории Aura',
-  },
-  {
-    title: 'Ориентирование',
-    text: 'Маршруты по лесной территории для командных программ, квестов и выездных мероприятий.',
-    meta: ['Лесные маршруты'],
-    image: '/media/actions/orientation.png',
-    alt: 'Спортивное ориентирование на территории Aura',
+    title: 'Домик «Исток»',
+    text: 'Домик у леса для встречи с близкими, шашлыка и активного отдыха без ночлега.',
+    meta: ['Терраса', 'Без ночлега'],
+    image: '/media/actions/guest_house.jpg',
+    alt: 'Домик «Исток» на территории AURA',
+    href: '/house/istok',
   },
 ];
 
@@ -75,6 +68,9 @@ export const ShortActions = () => {
       <SActionsGrid>
         {actions.map((action) => (
           <SActionCard $featured={action.featured} key={action.title}>
+            {action.href && (
+              <SActionLink href={action.href} aria-label={`Подробнее: ${action.title}`} />
+            )}
             <SActionImage>
               <Image
                 src={action.image}

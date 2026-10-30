@@ -37,11 +37,12 @@ export const SPhoneAction = styled.span`
 `;
 
 export const STel = styled.a`
+  ${({ theme }) => theme.typography.phoneCompact};
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  ${({ theme }) => theme.font.label.medium};
+
   color: ${({ theme }) => theme.color.brand.primaryPressed};
   text-decoration: none;
   transition: color 0.2s ease;
@@ -63,7 +64,6 @@ export const STel = styled.a`
     border-radius: 50%;
     background: rgba(20, 17, 15, 0.12);
     color: inherit !important;
-    font-size: 18px;
     transition:
       color 320ms ease,
       border-color 320ms ease,
@@ -78,7 +78,7 @@ export const STel = styled.a`
 `;
 
 export const SAddress = styled.div`
-  ${({ theme }) => theme.font.body.small};
+  ${({ theme }) => theme.typography.small};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
     display: none;

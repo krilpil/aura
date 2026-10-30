@@ -1,9 +1,7 @@
 'use client';
 
 import { Carousel } from 'antd';
-import styled, { css } from 'styled-components';
-
-import type { IHeroPromoAction } from '../model';
+import styled from 'styled-components';
 
 export const SImageLayer = styled.div`
   position: absolute;
@@ -24,21 +22,26 @@ export const SImageLayer = styled.div`
 `;
 
 export const SCarousel = styled(Carousel)`
-  --hero-height: clamp(700px, calc(100vh - 48px), 1020px);
+  --hero-height: clamp(500px, 68svh, 660px);
 
   position: relative;
   overflow: hidden;
   background: radial-gradient(circle at 72% 28%, rgba(121, 96, 74, 0.34), transparent 34%), #14110f;
 
-  .slick-list,
-  .slick-track,
-  .slick-slide,
+  .slick-track {
+    display: flex;
+  }
+
+  .slick-slide {
+    height: auto;
+  }
+
   .slick-slide > div {
-    height: var(--hero-height);
+    height: 100%;
   }
 
   && .slick-dots.hero-dots {
-    inset-inline-start: clamp(16px, 5vw, 72px);
+    inset-inline-start: max(clamp(20px, 5vw, 72px), calc((100% - 1320px) / 2));
     inset-inline-end: auto;
     bottom: clamp(18px, 4vw, 42px);
 
@@ -118,15 +121,10 @@ export const SCarousel = styled(Carousel)`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
-    /*
-     * Hero не зажимаем строго в 100svh.
-     * На небольших экранах он сможет стать выше,
-     * чтобы между блоками оставался воздух.
-     */
-    --hero-height: max(100svh, 780px);
+    --hero-height: clamp(560px, 76svh, 660px);
 
     && .slick-dots.hero-dots {
-      inset-inline-start: 20px;
+      inset-inline-start: clamp(20px, 5vw, 72px);
       bottom: 22px;
 
       gap: 8px;
@@ -142,7 +140,9 @@ export const SCarousel = styled(Carousel)`
 export const SSlide = styled.section`
   position: relative;
 
-  height: var(--hero-height);
+  min-height: var(--hero-height);
+  height: 100%;
+  padding-inline: clamp(20px, 5vw, 72px);
 
   isolation: isolate;
 
@@ -184,8 +184,6 @@ export const SSlide = styled.section`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
-    height: var(--hero-height);
-
     &::before {
       background:
         radial-gradient(circle at 76% 18%, rgba(255, 255, 255, 0.12), transparent 28%),
@@ -216,10 +214,12 @@ export const SContent = styled.div`
 
   gap: clamp(18px, 2vw, 26px);
 
-  width: min(900px, 100%);
+  width: min(1320px, 100%);
+  min-height: var(--hero-height);
   height: 100%;
+  margin: 0 auto;
 
-  padding: clamp(118px, 11vw, 164px) clamp(16px, 5vw, 72px) clamp(96px, 8vw, 140px);
+  padding: clamp(112px, 10vw, 148px) 0 clamp(64px, 6vw, 88px);
 
   color: ${({ theme }) => theme.color.text.inverse};
 
@@ -228,44 +228,28 @@ export const SContent = styled.div`
 
     gap: 24px;
 
-    padding: 96px 20px 108px;
+    padding: 104px 0 64px;
   }
 `;
 
-export const STitle = styled.h1`
-  max-width: 840px;
+export const STitle = styled.h2`
+  ${({ theme }) => theme.typography.hero};
+  white-space: pre-line;
 
   margin: 0;
-
-  ${({ theme }) => theme.font.headline.extraLarge};
-
-  font-size: clamp(46px, 7.2vw, 102px);
-  line-height: 0.94;
-  letter-spacing: 0;
 
   text-wrap: balance;
 
   text-shadow:
     0 20px 56px rgba(0, 0, 0, 0.46),
     0 1px 0 rgba(255, 255, 255, 0.08);
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
-    max-width: 360px;
-
-    font-size: 40px;
-    line-height: 1.04;
-  }
 `;
 
 export const SText = styled.p`
+  ${({ theme }) => theme.typography.body};
   max-width: 760px;
 
   margin: 0;
-
-  ${({ theme }) => theme.font.body.large};
-
-  font-size: clamp(16px, 1.6vw, 20px);
-  line-height: 1.55;
 
   color: rgba(255, 255, 255, 0.86);
 
@@ -275,9 +259,6 @@ export const SText = styled.p`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
     max-width: 350px;
-
-    font-size: 16px;
-    line-height: 1.6;
   }
 `;
 
@@ -295,6 +276,7 @@ export const SFacts = styled.div`
 `;
 
 export const SFact = styled.span`
+  ${({ theme }) => theme.typography.meta};
   display: inline-flex;
   align-items: center;
 
@@ -309,101 +291,11 @@ export const SFact = styled.span`
 
   color: rgba(255, 255, 255, 0.88);
 
-  ${({ theme }) => theme.font.label.medium};
-
   backdrop-filter: blur(10px);
 
   @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
     min-height: 36px;
 
     padding: 8px 12px;
-  }
-`;
-
-export const SActions = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-
-  gap: 12px;
-
-  padding-top: 4px;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
-    flex-direction: column;
-
-    gap: 12px;
-
-    padding-top: 12px;
-  }
-`;
-
-export const SAction = styled.button<{
-  $variant: IHeroPromoAction['variant'];
-}>`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  min-height: 48px;
-  max-width: 100%;
-
-  padding: 13px 20px;
-
-  border: 1px solid transparent;
-  border-radius: ${({ theme }) => theme.borderRadius.full};
-
-  cursor: pointer;
-
-  ${({ theme }) => theme.font.label.large};
-
-  letter-spacing: 0;
-
-  transition:
-    background-color 180ms ease,
-    border-color 180ms ease,
-    color 180ms ease;
-
-  &:focus-visible {
-    outline: 3px solid rgba(255, 255, 255, 0.78);
-    outline-offset: 3px;
-  }
-
-  ${({ $variant, theme }) =>
-    $variant === 'primary'
-      ? css`
-          background: #79604a;
-          color: #ffffff;
-
-          &:hover {
-            background: #8a715b;
-          }
-
-          &:active {
-            background: #684f3d;
-          }
-        `
-      : css`
-          border-color: rgba(255, 255, 255, 0.48);
-
-          background: transparent;
-
-          color: ${theme.color.text.inverse};
-
-          &:hover {
-            border-color: rgba(255, 255, 255, 0.78);
-
-            background: rgba(255, 255, 255, 0.08);
-          }
-
-          &:active {
-            background: rgba(255, 255, 255, 0.14);
-          }
-        `}
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
-    width: 100%;
-    min-height: 52px;
-
-    padding: 14px 18px;
   }
 `;

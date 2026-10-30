@@ -1,8 +1,8 @@
 import { DefaultTheme } from 'styled-components';
 
-import { IBorderRadiusTheme, IBreakpointsTheme, IColorsTheme, IFontTheme } from '../model/theme';
+import { IBorderRadiusTheme, IBreakpointsTheme, IColorsTheme } from '../model/theme';
 import { breakpoints } from './breakpoints';
-import { fonts } from './fonts';
+import { typography } from './typography';
 
 const borderRadiusTheme: IBorderRadiusTheme = {
   full: '9999px',
@@ -26,107 +26,6 @@ const breakpointsTheme: IBreakpointsTheme = {
 
   minDesktops: `${breakpoints.minDesktops}px`,
   maxDesktops: `${breakpoints.maxDesktops}px`,
-};
-
-export const fontTheme: IFontTheme = {
-  headline: {
-    extraLarge: `
-    font-family: ${fonts.Lora};
-    font-size: 32px;
-    font-weight: 400;
-    line-height: 1.2;
-  `,
-    large: `
-    font-family: ${fonts.Lora};
-    font-size: 28px;
-    font-weight: 400;
-    line-height: 1.2;
-  `,
-    medium: `
-    font-family: ${fonts.Lora};
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 1.2;
-  `,
-    small: `
-    font-family: ${fonts.Lora};
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 1.2;
-  `,
-  },
-  title: {
-    large: `
-    font-family: ${fonts.Manrope};
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 1.2;
-  `,
-    medium: `
-    font-family: ${fonts.Manrope};
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.2;
-  `,
-    small: `
-    font-family: ${fonts.Manrope};
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.2;
-  `,
-  },
-  body: {
-    large: `
-    font-family: ${fonts.Manrope};
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.3;
-  `,
-    medium: `
-    font-family: ${fonts.Manrope};
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.3;
-  `,
-    small: `
-    font-family: ${fonts.Manrope};
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.3;
-  `,
-  },
-  label: {
-    large: `
-    font-family: ${fonts.Manrope};
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.2;
-  `,
-    medium: `
-    font-family: ${fonts.Manrope};
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.2;
-  `,
-    small: `
-    font-family: ${fonts.Manrope};
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1.2;
-  `,
-  },
-  navTab: {
-    default: `
-    font-family: ${fonts.Manrope};
-    font-size: 12px;
-    font-weight: 400;
-  `,
-    active: `
-    font-family: ${fonts.Manrope};
-    font-size: 12px;
-    font-weight: 600;
-  `,
-  },
 };
 
 const colorTheme: IColorsTheme = {
@@ -241,6 +140,6 @@ const colorTheme: IColorsTheme = {
 export const theme: DefaultTheme = {
   color: colorTheme,
   borderRadius: borderRadiusTheme,
-  font: fontTheme,
+  typography,
   breakpoints: breakpointsTheme,
 };

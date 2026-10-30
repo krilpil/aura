@@ -12,6 +12,7 @@ interface IScrolledProps {
 }
 
 export const SHeader = styled.header<IScrolledProps>`
+  ${({ theme }) => theme.typography.body};
   --header-height: ${({ $isScrolled }) => ($isScrolled ? '76px' : '116px')};
   --header-action-color: ${({ $isScrolled }) => ($isScrolled ? brandColor : '#ffffff')};
 
@@ -30,8 +31,6 @@ export const SHeader = styled.header<IScrolledProps>`
 
   padding: 12px clamp(24px, 4vw, 64px);
   padding-top: calc(12px + env(safe-area-inset-top, 0px));
-
-  font-family: var(--font-manrope), sans-serif;
 
   color: ${({ $isScrolled }) => ($isScrolled ? brandColor : '#ffffff')};
 
@@ -81,6 +80,7 @@ export const SHeader = styled.header<IScrolledProps>`
   }
 
   a:focus-visible,
+  button[aria-expanded]:focus-visible,
   button:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 4px;
@@ -160,6 +160,7 @@ export const SNavigation = styled.nav`
 `;
 
 export const SNavigationLink = styled.a`
+  ${({ theme }) => theme.typography.navigation};
   position: relative;
 
   flex: 0 0 auto;
@@ -167,12 +168,6 @@ export const SNavigationLink = styled.a`
   padding: 10px 0;
 
   color: inherit;
-
-  font-family: var(--font-manrope), sans-serif;
-  font-size: clamp(13px, 1vw, 15px);
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
 
   text-decoration: none;
   white-space: nowrap;
@@ -211,6 +206,94 @@ export const SNavigationLink = styled.a`
   }
 `;
 
+export const SEventsDropdown = styled.div`
+  ${({ theme }) => theme.typography.navigation};
+  position: relative;
+  flex: 0 0 auto;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    opacity: 0.9;
+  }
+
+  button::after {
+    width: 6px;
+    height: 6px;
+    margin-top: -3px;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    content: '';
+    transform: rotate(45deg);
+  }
+
+  button[aria-expanded='true']::after {
+    margin-top: 3px;
+    transform: rotate(225deg);
+  }
+
+  button:hover,
+  button[aria-expanded='true'] {
+    opacity: 1;
+  }
+`;
+
+export const SEventsLinks = styled.div`
+  position: absolute;
+  top: calc(100% + 8px);
+  left: -20px;
+  min-width: 260px;
+  padding: 10px;
+  border: 1px solid rgba(133, 109, 85, 0.16);
+  border-radius: ${({ theme }) => theme.borderRadius.extraSmall};
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(20, 30, 22, 0.14);
+  color: ${brandColor};
+
+  a {
+    ${({ theme }) => theme.typography.navigation};
+    display: block;
+    padding: 12px 14px;
+    color: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  a:hover,
+  a:focus-visible {
+    background: #f4f1ec;
+  }
+
+  a:focus-visible {
+    outline-offset: -2px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
+    position: static;
+    min-width: 0;
+    margin: 4px 0 12px;
+    padding: 0 0 0 12px;
+    border: 0;
+    border-left: 1px solid rgba(133, 109, 85, 0.25);
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+
+    a {
+      ${({ theme }) => theme.typography.navigationMobile};
+      white-space: normal;
+    }
+  }
+`;
+
 export const SHeaderPhone = styled(PhoneContact)`
   padding: 0;
 
@@ -222,13 +305,9 @@ export const SHeaderPhone = styled(PhoneContact)`
 
   color: var(--header-action-color);
 
-  font-family: var(--font-manrope), sans-serif;
-
   a,
   time span {
     color: inherit !important;
-
-    font-family: inherit;
 
     transition: none;
   }

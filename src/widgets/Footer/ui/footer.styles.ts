@@ -57,15 +57,10 @@ export const SFooterLogo = styled.a`
 `;
 
 export const SBrandText = styled.p`
+  ${({ theme }) => theme.typography.card};
   max-width: 320px;
 
   margin: 0 0 32px;
-
-  ${({ theme }) => theme.font.headline.medium};
-
-  font-size: clamp(23px, 2vw, 30px);
-  line-height: 1.22;
-  letter-spacing: -0.015em;
 
   color: rgba(255, 255, 255, 0.94);
 
@@ -75,16 +70,12 @@ export const SBrandText = styled.p`
     max-width: 440px;
 
     margin-bottom: 26px;
-
-    font-size: 26px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
     max-width: 320px;
 
     margin-bottom: 28px;
-
-    font-size: 24px;
   }
 `;
 
@@ -154,13 +145,8 @@ export const SNavigationColumn = styled.nav`
 `;
 
 export const SColumnTitle = styled.h5`
+  ${({ theme }) => theme.typography.captionStrong};
   margin: 0 0 24px;
-
-  ${({ theme }) => theme.font.label.large};
-
-  font-size: 15px;
-  line-height: 1.4;
-  letter-spacing: 0.01em;
 
   color: #ffffff;
 
@@ -178,14 +164,10 @@ export const SNavigationList = styled.div`
 `;
 
 export const SNavigationLink = styled.a`
+  ${({ theme }) => theme.typography.navigation};
   position: relative;
 
   display: inline;
-
-  ${({ theme }) => theme.font.body.medium};
-
-  font-size: 14px;
-  line-height: 1.45;
 
   color: rgba(255, 255, 255, 0.6);
 
@@ -223,15 +205,6 @@ export const SNavigationLink = styled.a`
       }
     }
   }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.maxTablets}) {
-    font-size: 15px;
-    line-height: 1.5;
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
-    font-size: 14px;
-  }
 `;
 
 export const SContactColumn = styled.div`
@@ -245,10 +218,7 @@ export const SContactColumn = styled.div`
 `;
 
 export const SPhone = styled.a`
-  ${({ theme }) => theme.font.headline.medium};
-
-  font-size: clamp(18px, 2vw, 22px);
-  line-height: 1.2;
+  ${({ theme }) => theme.typography.phoneCompact};
 
   color: #ffffff;
 
@@ -260,49 +230,33 @@ export const SPhone = styled.a`
   &:hover {
     color: ${brandColor};
   }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.maxTablets}) {
-    font-size: 24px;
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
-    font-size: 22px;
-  }
 `;
 
 export const SAddress = styled.address`
+  ${({ theme }) => theme.typography.caption};
   max-width: 270px;
 
   margin: 0;
 
-  ${({ theme }) => theme.font.body.medium};
-
-  font-size: 14px;
   font-style: normal;
-  line-height: 1.65;
 
   color: rgba(255, 255, 255, 0.6);
 
   @media (max-width: ${({ theme }) => theme.breakpoints.maxTablets}) {
     max-width: 360px;
-
-    font-size: 15px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
     max-width: 300px;
-
-    font-size: 14px;
   }
 `;
 
 export const SRouteLink = styled.a`
+  ${({ theme }) => theme.typography.button};
   display: inline-flex;
   align-items: center;
 
   gap: 8px;
-
-  ${({ theme }) => theme.font.label.medium};
 
   color: ${brandColor};
 
@@ -314,7 +268,6 @@ export const SRouteLink = styled.a`
 
   &::after {
     content: '→';
-
     font-size: 18px;
     line-height: 1;
   }
@@ -328,20 +281,6 @@ export const SRouteLink = styled.a`
 
 export const SCopyright = styled.span`
   min-width: 0;
-`;
-
-export const SLegalLink = styled.a`
-  width: fit-content;
-
-  color: inherit;
-
-  text-decoration: none;
-
-  transition: color ${transition};
-
-  &:hover {
-    color: rgba(255, 255, 255, 0.86);
-  }
 `;
 
 export const SFooterContent = styled.div`
@@ -482,12 +421,7 @@ export const SFooterContent = styled.div`
 `;
 
 export const SFooterBottom = styled.div`
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
-  align-items: center;
-
-  gap: 24px 36px;
-
+  ${({ theme }) => theme.typography.small};
   width: 100%;
   max-width: 1320px;
 
@@ -496,63 +430,25 @@ export const SFooterBottom = styled.div`
 
   border-top: 1px solid rgba(255, 255, 255, 0.12);
 
-  ${({ theme }) => theme.font.body.small};
-
-  font-size: 12px;
-  line-height: 1.5;
-
   color: rgba(255, 255, 255, 0.42);
 
   @media (max-width: ${({ theme }) => theme.breakpoints.maxTablets}) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    gap: 16px 32px;
-
     margin-top: 64px;
-
-    ${SCopyright} {
-      grid-column: 1 / -1;
-
-      margin-bottom: 4px;
-    }
-
-    ${SLegalLink}:last-child {
-      justify-self: end;
-
-      text-align: right;
-    }
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.maxMobile}) {
-    grid-template-columns: 1fr;
-
-    gap: 14px;
-
     margin-top: 56px;
     padding-top: 24px;
-
-    ${SCopyright} {
-      grid-column: auto;
-
-      margin-bottom: 8px;
-    }
-
-    ${SLegalLink}:last-child {
-      justify-self: start;
-
-      text-align: left;
-    }
   }
 `;
 
 export const SFooter = styled.footer`
+  ${({ theme }) => theme.typography.body};
   position: relative;
   isolation: isolate;
   overflow: hidden;
 
   padding: clamp(72px, 8vw, 120px) clamp(16px, 5vw, 72px) 28px;
-
-  font-family: var(--font-manrope), sans-serif;
 
   color: rgba(255, 255, 255, 0.82);
   background:

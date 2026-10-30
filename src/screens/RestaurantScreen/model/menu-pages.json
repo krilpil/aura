@@ -1,0 +1,47 @@
+{
+  "version": "1b2648db70d5dd44",
+  "pages": [
+    {
+      "page": 1,
+      "src": "/media/restaurant/menu/page-001.webp?v=1b2648db70d5dd44",
+      "width": 1191,
+      "height": 1684
+    },
+    {
+      "page": 2,
+      "src": "/media/restaurant/menu/page-002.webp?v=1b2648db70d5dd44",
+      "width": 1191,
+      "height": 1684
+    },
+    {
+      "page": 3,
+      "src": "/media/restaurant/menu/page-003.webp?v=1b2648db70d5dd44",
+      "width": 1191,
+      "height": 1684
+    },
+    {
+      "page": 4,
+      "src": "/media/restaurant/menu/page-004.webp?v=1b2648db70d5dd44",
+      "width": 1191,
+      "height": 1684
+    },
+    {
+      "page": 5,
+      "src": "/media/restaurant/menu/page-005.webp?v=1b2648db70d5dd44",
+      "width": 1191,
+      "height": 1684
+    },
+    {
+      "page": 6,
+      "src": "/media/restaurant/menu/page-006.webp?v=1b2648db70d5dd44",
+      "width": 1191,
+      "height": 1684
+    },
+    {
+      "page": 7,
+      "src": "/media/restaurant/menu/page-007.webp?v=1b2648db70d5dd44",
+      "width": 1191,
+      "height": 1684
+    }
+  ]
+}

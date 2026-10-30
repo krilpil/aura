@@ -1,0 +1,1 @@
+export { getActivityOffers } from './getActivityOffers';
