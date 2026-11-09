@@ -88,7 +88,9 @@ export const seoPages = {
       'Домик «Исток» в AURA в Арзамасе для отдыха без ночлега: шашлык, терраса и лес. ' +
       'Аренда — 10 000 ₽ за сутки. Лазертаг согласуется отдельно.',
     breadcrumb: 'Домик «Исток»',
-    image: '/media/house/istok/1.jpg',
+    image:
+      '/media/updated_house/' +
+      'xkpDy_cvQ-QZ-CT7nLyI54AHVJC3C6i5iWeY-_Rf7HVfIIMmmeq3E0vbkuDI_DvwTyHhtlY1TU7BGCoAqpvpg1LL.jpg',
     imageAlt: 'Домик «Исток» на лесной территории AURA',
   },
   '/house/istok-old': {

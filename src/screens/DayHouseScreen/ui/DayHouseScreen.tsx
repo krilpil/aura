@@ -92,16 +92,46 @@ const conditions = [
 
 const gallery = [
   {
-    src: '/media/house/istok/1.jpg',
-    alt: 'Домик «Исток» среди лесной территории AURA',
+    src:
+      '/media/updated_house/' +
+      'xkpDy_cvQ-QZ-CT7nLyI54AHVJC3C6i5iWeY-_Rf7HVfIIMmmeq3E0vbkuDI_DvwTyHhtlY1TU7BGCoAqpvpg1LL.jpg',
+    alt: 'Домик «Исток» с террасой среди берёз',
   },
   {
-    src: '/media/house/istok/2.jpg',
-    alt: 'Интерьер домика «Исток»',
+    src:
+      '/media/updated_house/' +
+      'nW3E6-RJvRTl48JWs1zCiM5wNKppZNqyluanaxiXNtNsCX11lXKoRdHlC6LG9uSWgZQDFQPoTApQ2LT6D3KkDbm3.jpg',
+    alt: 'Домик «Исток» на лесной территории AURA',
   },
   {
-    src: '/media/house/istok/3.jpg',
-    alt: 'Терраса домика «Исток»',
+    src:
+      '/media/updated_house/' +
+      'wQgT2HmxAbnV54P2LOuFK2qbAs0UeBtMLlml727HWFsN1T37g6w2_dFWtgMi7USXfVa5_cnegNm29KnhFYXKNy8l.jpg',
+    alt: 'Дорожка к домику «Исток» среди берёз',
+  },
+  {
+    src:
+      '/media/updated_house/' +
+      'a3HA5Y1Q6n7qWnhdoA_I40Mt0BbGKmL4atV-ujbwLvvGDB0U5TyyZci6_WHi9cA2fnkFQCq93e6BfUCD-GQqykdg.jpg',
+    alt: 'Обеденная зона и кухня домика «Исток» с панорамными окнами',
+  },
+  {
+    src:
+      '/media/updated_house/' +
+      'lSEO-3l2k7dur5Q_lVDje4FLgIB2Wsg4otH5CevTbZuSgOixOC_423acBwtkK6YgUXgegB5zH4hTyKtBtC1J88n4.jpg',
+    alt: 'Прихожая домика «Исток» с видом на лес',
+  },
+  {
+    src:
+      '/media/updated_house/' +
+      'BfNvH37nNnh3P3whV8bFiHS6DkjS8NhS4KEY9cINx8ZerkKsqbySQEVetLRaeInRfhGBfleRdAvy73UI7aWeF9CW.jpg',
+    alt: 'Комната домика «Исток»',
+  },
+  {
+    src:
+      '/media/updated_house/' +
+      'P_UJgpVSomd5w4xKUEE5EQSi0EzKf8SuDkovAe51NKA-ovdubCzYa3MZG0wYo5uz8jUOtj92NYgmyZc5FgeYkURv.jpg',
+    alt: 'Санузел домика «Исток»',
   },
 ];
 

@@ -48,7 +48,9 @@ const actions = [
     title: 'Домик «Исток»',
     text: 'Домик у леса для встречи с близкими, шашлыка и активного отдыха без ночлега.',
     meta: ['Терраса', 'Без ночлега'],
-    image: '/media/actions/guest_house.jpg',
+    image:
+      '/media/updated_house/' +
+      'xkpDy_cvQ-QZ-CT7nLyI54AHVJC3C6i5iWeY-_Rf7HVfIIMmmeq3E0vbkuDI_DvwTyHhtlY1TU7BGCoAqpvpg1LL.jpg',
     alt: 'Домик «Исток» на территории AURA',
     href: '/house/istok',
   },
