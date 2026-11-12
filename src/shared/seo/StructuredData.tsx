@@ -82,7 +82,6 @@ export function StructuredData({ path }: { path: SeoPath }) {
       address,
       parentOrganization: { '@id': organizationId },
       servesCuisine: ['Русская', 'Азиатская', 'Европейская', 'Фьюжн'],
-      hasMenu: `${url}#menu`,
       openingHoursSpecification: {
         '@type': 'OpeningHoursSpecification',
         dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],

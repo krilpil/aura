@@ -5,7 +5,6 @@ import { Breadcrumbs } from '@/features/Breadcrumbs';
 import { Gallery } from '@/widgets/Gallery';
 
 import { formatMenuPrice, restaurantInfo } from '../model/menu';
-import { RestaurantMenu } from './RestaurantMenu';
 import {
   SActions,
   SBooking,
@@ -21,7 +20,6 @@ import {
   SIntro,
   SIntroColumns,
   SLocation,
-  SMenu,
   SPavilion,
   SPavilionImage,
   SRestaurantScreen,
@@ -31,7 +29,6 @@ import {
   SSectionHeader,
   SService,
   SText,
-  STextLink,
   STitle,
 } from './restaurantScreen.styles';
 
@@ -95,8 +92,7 @@ export const RestaurantScreen = () => (
         <h1>Ресторан AURA в Арзамасе</h1>
         <p>Авторская кухня, тёплые встречи и большие праздники. Среди леса, рядом с рекой.</p>
         <SActions>
-          <SButton href="#menu">Посмотреть меню</SButton>
-          <STextLink href="#spaces">Выбрать пространство</STextLink>
+          <SButton href="#spaces">Выбрать пространство</SButton>
         </SActions>
       </SHeroContent>
     </SHero>
@@ -114,7 +110,6 @@ export const RestaurantScreen = () => (
             От первой закуски до десерта мы продумываем ужин как часть вашей встречи. Для торжества
             поможем составить меню под формат события.
           </SText>
-          <STextLink href="#menu">Познакомиться с меню</STextLink>
         </SCuisine>
         <SRestaurantFacts aria-label="Информация о ресторане">
           <div>
@@ -138,14 +133,6 @@ export const RestaurantScreen = () => (
         </SRestaurantFacts>
       </SIntroColumns>
     </SIntro>
-
-    <SMenu id="menu" aria-labelledby="menu-title">
-      <SSectionHeader>
-        <STitle id="menu-title">Меню ресторана</STitle>
-        <p>Листайте меню, выбирайте блюда или скачайте PDF, чтобы обсудить заказ с близкими.</p>
-      </SSectionHeader>
-      <RestaurantMenu />
-    </SMenu>
 
     <SSection id="spaces" aria-labelledby="spaces-title">
       <SSectionHeader>

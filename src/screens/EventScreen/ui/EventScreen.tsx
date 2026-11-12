@@ -139,7 +139,7 @@ export const EventScreen = ({ event }: IEventScreenProps) => {
         <div>
           <SSectionTitle id={`${event}-cuisine-title`}>{content.cuisineTitle}</SSectionTitle>
           <SServiceText>{content.cuisineText}</SServiceText>
-          <SHallLink href="/restaurant#menu">Посмотреть меню ресторана</SHallLink>
+          <SHallLink href="/restaurant">Подробнее о ресторане</SHallLink>
         </div>
       </SService>
 
